@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    container_name: n8n-chatbot-clima
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - WEBHOOK_URL=http://localhost:5678/
+      # Variáveis de ambiente do chatbot
+      # Substitua os valores abaixo pelas suas chaves REAIS (nunca suba este arquivo com chaves reais!)
+      - OPENWEATHER_API_KEY=4e41154375b6acc5e03b23fc9558a22e
+      - GEMINI_API_KEY=SUA_GEMINI_API_KEY_AQUI   # Opcional
+      - WEBHOOK_URL=https://hoverfly-unelderly-cecile.ngrok-free.dev/
+      - N8N_BLOCK_ENV_ACCESS_IN_NODE=false
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n_data:
+    driver: local
